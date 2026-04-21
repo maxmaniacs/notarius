@@ -1,0 +1,197 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Для локальной разработки: запустите `npx decap-server` и откройте /admin/
+# local_backend: true
+
+media_folder: "images"
+public_folder: "/images"
+site_url: https://example.netlify.app
+display_url: https://example.netlify.app
+logo_url: https://example.netlify.app/favicon.ico
+locale: 'ru'
+
+collections:
+  - name: "content"
+    label: "Содержимое сайта"
+    editor:
+      preview: false
+    files:
+      - name: "main"
+        label: "Главная страница"
+        file: "content.json"
+        format: "json"
+        fields:
+          - label: "Сайт и контакты"
+            name: "site"
+            widget: "object"
+            fields:
+              - { label: "Title страницы", name: "title", widget: "string" }
+              - { label: "Название бренда", name: "brand", widget: "string" }
+              - { label: "Подпись бренда", name: "brandSub", widget: "string" }
+              - { label: "Телефон (отображаемый)", name: "phone", widget: "string" }
+              - { label: "Телефон (для ссылки tel:)", name: "phoneHref", widget: "string", hint: "Только цифры и +, например +74951234567" }
+              - { label: "WhatsApp (цифры)", name: "whatsapp", widget: "string", hint: "Например 74951234567" }
+
+          - label: "Hero (первый экран)"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Кикер слева", name: "kicker", widget: "string" }
+              - { label: "Кикер справа", name: "kickerRight", widget: "string" }
+              - { label: "Заголовок строка 1", name: "headlineLine1", widget: "string" }
+              - { label: "Заголовок — акцент (курсив)", name: "headlineAccent", widget: "string" }
+              - { label: "Заголовок строка 2", name: "headlineLine2", widget: "string" }
+              - { label: "Заголовок строка 3", name: "headlineLine3", widget: "string" }
+              - { label: "Подзаголовок", name: "lead", widget: "text" }
+              - { label: "Кнопка основная", name: "ctaPrimary", widget: "string" }
+              - { label: "Кнопка вторичная", name: "ctaSecondary", widget: "string" }
+              - label: "Карточка-документ"
+                name: "docCard"
+                widget: "object"
+                fields:
+                  - { label: "Заголовок", name: "title", widget: "string" }
+                  - { label: "Номер", name: "number", widget: "string" }
+                  - { label: "Строки", name: "lines", widget: "list", field: { label: "Строка", name: "line", widget: "string" } }
+                  - { label: "Подпись нотариуса (лейбл)", name: "notaryLabel", widget: "string" }
+                  - { label: "ФИО нотариуса", name: "notaryName", widget: "string" }
+              - label: "Бейджи доверия"
+                name: "badges"
+                widget: "list"
+                fields:
+                  - { label: "Иконка (lucide)", name: "icon", widget: "string", hint: "Например: ShieldCheck, MapPin, Scale" }
+                  - { label: "Заголовок", name: "title", widget: "string" }
+                  - { label: "Подпись", name: "sub", widget: "string" }
+
+          - label: "Что заверяем"
+            name: "certify"
+            widget: "object"
+            fields:
+              - { label: "Заголовок", name: "heading", widget: "string" }
+              - { label: "Подзаголовок", name: "lead", widget: "text" }
+              - label: "Пункты"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "Иконка", name: "icon", widget: "string" }
+                  - { label: "Заголовок", name: "title", widget: "string" }
+                  - { label: "Описание", name: "desc", widget: "text" }
+
+          - label: "Категории дел"
+            name: "cases"
+            widget: "object"
+            fields:
+              - { label: "Заголовок (начало)", name: "heading", widget: "string" }
+              - { label: "Заголовок — акцент", name: "headingAccent", widget: "string" }
+              - { label: "Заголовок (конец)", name: "headingTail", widget: "string" }
+              - label: "Пункты"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "Иконка", name: "icon", widget: "string" }
+                  - { label: "Заголовок", name: "title", widget: "string" }
+                  - { label: "Описание", name: "desc", widget: "text" }
+              - { label: "Сноска", name: "footerNote", widget: "text" }
+              - { label: "Текст ссылки", name: "footerLink", widget: "string" }
+
+          - label: "Процесс"
+            name: "process"
+            widget: "object"
+            fields:
+              - { label: "Заголовок (начало)", name: "heading", widget: "string" }
+              - { label: "Заголовок — акцент", name: "headingAccent", widget: "string" }
+              - { label: "Заголовок (конец)", name: "headingTail", widget: "string" }
+              - label: "Шаги"
+                name: "steps"
+                widget: "list"
+                fields:
+                  - { label: "Иконка", name: "icon", widget: "string" }
+                  - { label: "Заголовок", name: "title", widget: "string" }
+                  - { label: "Описание", name: "desc", widget: "text" }
+
+          - label: "Цены"
+            name: "pricing"
+            widget: "object"
+            fields:
+              - { label: "Заголовок", name: "heading", widget: "string" }
+              - { label: "Заголовок — акцент", name: "headingAccent", widget: "string" }
+              - { label: "Описание", name: "lead", widget: "text" }
+              - { label: "Бейдж", name: "badge", widget: "string" }
+              - label: "Тарифы"
+                name: "rows"
+                widget: "list"
+                fields:
+                  - { label: "Услуга", name: "service", widget: "string" }
+                  - { label: "Объём", name: "volume", widget: "string" }
+                  - { label: "Стоимость", name: "price", widget: "string" }
+              - { label: "Примечание", name: "note", widget: "string" }
+
+          - label: "Почему мы"
+            name: "whyUs"
+            widget: "object"
+            fields:
+              - { label: "Заголовок", name: "heading", widget: "string" }
+              - { label: "Заголовок — акцент", name: "headingAccent", widget: "string" }
+              - { label: "Стат: кол-во протоколов", name: "statProtocols", widget: "string" }
+              - { label: "Стат: подпись протоколов", name: "statProtocolsLabel", widget: "string" }
+              - { label: "Стат: лет", name: "statYears", widget: "string" }
+              - { label: "Стат: подпись лет", name: "statYearsLabel", widget: "string" }
+              - label: "Причины"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "Иконка", name: "icon", widget: "string" }
+                  - { label: "Заголовок", name: "title", widget: "string" }
+                  - { label: "Описание", name: "desc", widget: "text" }
+
+          - label: "FAQ"
+            name: "faq"
+            widget: "object"
+            fields:
+              - { label: "Заголовок", name: "heading", widget: "string" }
+              - { label: "Заголовок — акцент", name: "headingAccent", widget: "string" }
+              - { label: "Подзаголовок", name: "lead", widget: "text" }
+              - label: "Вопросы"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "Вопрос", name: "q", widget: "string" }
+                  - { label: "Ответ", name: "a", widget: "text" }
+
+          - label: "Контакты"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Заголовок", name: "heading", widget: "string" }
+              - { label: "Заголовок — акцент", name: "headingAccent", widget: "string" }
+              - { label: "Адрес (строка 1)", name: "addressTitle", widget: "string" }
+              - { label: "Адрес (строка 2)", name: "addressSub", widget: "string" }
+              - { label: "Метро", name: "metro", widget: "string" }
+              - label: "Часы работы"
+                name: "hours"
+                widget: "list"
+                fields:
+                  - { label: "День", name: "day", widget: "string" }
+                  - { label: "Время", name: "time", widget: "string" }
+              - { label: "Координаты", name: "coords", widget: "string" }
+              - { label: "Успех: заголовок", name: "successTitle", widget: "string" }
+              - { label: "Успех: текст", name: "successText", widget: "text" }
+              - label: "Варианты услуг (для формы)"
+                name: "services"
+                widget: "list"
+                field: { label: "Услуга", name: "service", widget: "string" }
+
+          - label: "Футер"
+            name: "footer"
+            widget: "object"
+            fields:
+              - { label: "О нотариусе", name: "about", widget: "text" }
+              - label: "Ссылки «Услуги»"
+                name: "services"
+                widget: "list"
+                fields:
+                  - { label: "Название", name: "title", widget: "string" }
+                  - { label: "Ссылка", name: "href", widget: "string" }
+              - { label: "Копирайт", name: "copyright", widget: "string" }
+              - { label: "Дисклеймер", name: "disclaimer", widget: "string" }
