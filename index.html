@@ -595,8 +595,8 @@ function Contact({ c }) {
                   <label className="flex items-start gap-3 cursor-pointer">
                     <input type="checkbox" checked={form.agree} onChange={(e)=>setForm({...form, agree:e.target.checked})} className="mt-1 accent-ink-900" />
                     <span className="text-[13px] leading-relaxed text-ink-900/70">
-                      Даю согласие на обработку персональных данных в соответствии с{" "}
-                      <a href="/privacy.html" className="underline hover:text-ink-900">политикой конфиденциальности</a>{" "}
+                      Даю <a href="/consent.html" className="underline hover:text-ink-900">согласие на обработку персональных данных</a> в порядке и на условиях{" "}
+                      <a href="/privacy.html" className="underline hover:text-ink-900">политики конфиденциальности</a>{" "}
                       (обязательно).
                     </span>
                   </label>
@@ -705,6 +705,7 @@ function Footer({ c }) {
                 </a>
               </li>
               <li><a href="/privacy.html" className="hover:text-bone-50">Политика конфиденциальности</a></li>
+              <li><a href="/consent.html" className="hover:text-bone-50">Согласие на обработку ПД</a></li>
               <li><a href="/offer.html" className="hover:text-bone-50">Публичная оферта</a></li>
             </ul>
           </div>
