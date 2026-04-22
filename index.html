@@ -283,9 +283,16 @@ function Certify({ c }) {
             <Reveal key={i} delay={i * 60}>
               <div className="group relative p-7 md:p-9 border-r border-b border-ink-900/12 bg-bone-50 hover:bg-bone-100 transition-colors h-full">
                 <span className="absolute top-4 right-5 font-mono text-[10px] tracking-[0.24em] text-ink-900/35">{String(i + 1).padStart(2, "0")}</span>
-                <span className="inline-grid place-items-center w-11 h-11 border border-ink-900/20 text-gold-600 mb-6 group-hover:border-gold-500 transition-colors">
-                  <Icon name={it.icon} className="w-5 h-5" stroke={1.4} />
-                </span>
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="inline-grid place-items-center w-11 h-11 border border-ink-900/20 text-gold-600 group-hover:border-gold-500 transition-colors">
+                    <Icon name={it.icon} className="w-5 h-5" stroke={1.4} />
+                  </span>
+                  {it.badge && (
+                    <span className={`font-mono text-[10px] tracking-[0.22em] uppercase px-2 py-1 ${it.badge === 'Онлайн' ? 'bg-gold-500/15 text-gold-600' : it.badge === 'Выезд' ? 'bg-ink-900/8 text-ink-900/60' : 'bg-ink-900/5 text-ink-900/50'}`}>
+                      {it.badge}
+                    </span>
+                  )}
+                </div>
                 <h3 className="font-display text-[22px] leading-snug text-ink-900">{it.title}</h3>
                 <p className="mt-3 text-[14.5px] leading-relaxed text-ink-900/70">{it.desc}</p>
               </div>
