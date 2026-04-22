@@ -1,6 +1,6 @@
 // Minimal Lucide shim — only icons actually used on this site
 (function(global){
-  var h = {xmlns:"http://www.w3.org/2000/svg",width:24,height:24,viewBox:"0 0 24 24",fill:"none","stroke-linecap":"round","stroke-linejoin":"round"};
+  var h = {xmlns:"http://www.w3.org/2000/svg",width:24,height:24,viewBox:"0 0 24 24",fill:"none",stroke:"currentColor","stroke-linecap":"round","stroke-linejoin":"round"};
   var icons = {
     ArrowRight:["svg",h,[["path",{d:"M5 12h14"}],["path",{d:"m12 5 7 7-7 7"}]]],
     Check:["svg",h,[["path",{d:"M20 6 9 17l-5-5"}]]],
