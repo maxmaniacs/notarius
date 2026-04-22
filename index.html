@@ -4,50 +4,12 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Нотариус онлайн · Заверение для суда · Москва</title>
-<link rel="preconnect" href="https://unpkg.com">
-<link rel="dns-prefetch" href="https://unpkg.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"></noscript>
 
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      fontFamily: {
-        serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
-      },
-      colors: {
-        ink:     { 900:'#0C1626', 800:'#121F33', 700:'#1B2B44', 600:'#2A3A54' },
-        bone:    { 50:'#FBF8F1', 100:'#F5F1E8', 200:'#ECE6D6', 300:'#D9D1BC' },
-        gold:    { 400:'#C9A961', 500:'#B8924A', 600:'#9E7A38' },
-        claret:  { 600:'#7A1F2B' },
-      },
-    },
-  },
-};
-</script>
-
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script>
-  // Обрабатываем invite/recovery токены и редиректим в админку
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
-        });
-      }
-    });
-  }
-</script>
-<script defer src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
-<script defer src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
-<script defer src="https://unpkg.com/lucide@0.453.0/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="styles.css">
 
 <style>
   html { scroll-behavior: smooth; }
@@ -79,6 +41,28 @@ tailwind.config = {
 
 <div id="root"></div>
 
+<script>
+  // Load Netlify Identity only when needed (invite/recovery tokens in URL)
+  if (location.hash.includes('invite_token') || location.hash.includes('recovery_token') || location.hash.includes('confirmation_token')) {
+    var s = document.createElement('script');
+    s.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
+    s.onload = function() {
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', function(user) {
+          if (!user) {
+            window.netlifyIdentity.on('login', function() {
+              document.location.href = '/admin/';
+            });
+          }
+        });
+      }
+    };
+    document.head.appendChild(s);
+  }
+</script>
+<script defer src="react.min.js"></script>
+<script defer src="react-dom.min.js"></script>
+<script defer src="lucide-mini.js"></script>
 <script defer src="app.js"></script>
 </body>
 </html>
