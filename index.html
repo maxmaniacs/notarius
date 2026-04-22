@@ -108,6 +108,24 @@ function Reveal({ children, as: Tag = "div", delay = 0, className = "" }) {
   return <Tag ref={ref} className={`reveal ${className}`}>{children}</Tag>;
 }
 
+/* ================= COOKIE BANNER ================= */
+function CookieBanner({ privacyLink }) {
+  const [visible, setVisible] = useState(() => !localStorage.getItem("cookie_ok"));
+  if (!visible) return null;
+  return (
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-ink-900 text-bone-100 px-5 py-4 md:flex md:items-center md:justify-between gap-6 border-t border-bone-100/20">
+      <p className="text-[13px] leading-relaxed text-bone-100/80 max-w-3xl">
+        Сайт использует файлы cookie для обеспечения работы форм обратной связи. Продолжая пользоваться сайтом, вы соглашаетесь с{" "}
+        <a href={privacyLink} className="underline hover:text-bone-50">политикой обработки персональных данных</a>.
+      </p>
+      <button onClick={() => { localStorage.setItem("cookie_ok","1"); setVisible(false); }}
+              className="mt-3 md:mt-0 shrink-0 inline-flex items-center gap-2 bg-gold-500 text-ink-900 font-medium px-5 py-2.5 text-[13px] hover:bg-gold-400 transition-colors">
+        Принять
+      </button>
+    </div>
+  );
+}
+
 const SectionNumber = ({ n, label }) => (
   <div className="flex items-baseline gap-4 font-mono text-[11px] tracking-[0.24em] uppercase text-ink-900/60">
     <span className="text-gold-500">§ {n}</span><span>{label}</span>
@@ -181,9 +199,9 @@ function Hero({ c }) {
           <div className="lg:col-span-8">
             <Reveal delay={80}>
               <h1 className="font-display text-[44px] leading-[1.02] md:text-[76px] md:leading-[0.98] lg:text-[92px] tracking-[-0.01em] text-ink-900 engraved">
-                {h.headlineLine1} <br/>
-                <span className="italic text-gold-600">{h.headlineAccent}</span> {h.headlineLine2} <br/>
-                {h.headlineLine3}
+                {h.headlineLine1 && <>{h.headlineLine1}<br/></>}
+                <span className="italic text-gold-600">{h.headlineAccent}</span>{h.headlineLine2 ? <> {h.headlineLine2}</> : null}
+                {h.headlineLine3 && <><br/>{h.headlineLine3}</>}
               </h1>
             </Reveal>
             <Reveal delay={220}>
@@ -502,7 +520,7 @@ function FAQ({ c }) {
 function Contact({ c }) {
   const s = c.contact;
   const [state, setState] = useState("idle");
-  const [form, setForm] = useState({ name: "", phone: "", message: "", service: s.services[0], agree: true });
+  const [form, setForm] = useState({ name: "", phone: "", message: "", service: s.services[0], agree: false, newsletter: false });
   const [errors, setErrors] = useState({});
 
   function validate(f) {
@@ -573,13 +591,23 @@ function Contact({ c }) {
                     <textarea value={form.message} onChange={(e)=>setForm({...form, message:e.target.value})} rows={3} className={field + " resize-none"} placeholder="Чтобы предварительно оценить объём и срок" />
                   </label>
                 </div>
-                <label className="mt-8 flex items-start gap-3 cursor-pointer">
-                  <input type="checkbox" checked={form.agree} onChange={(e)=>setForm({...form, agree:e.target.checked})} className="mt-1 accent-ink-900" />
-                  <span className="text-[13px] leading-relaxed text-ink-900/70">
-                    Отправляя форму, я соглашаюсь с <a href="#privacy" className="underline hover:text-ink-900">политикой обработки персональных данных</a>.
-                  </span>
-                </label>
-                {errors.agree && <div className="text-claret-600 font-mono text-[10.5px] tracking-[0.2em] uppercase mt-2">{errors.agree}</div>}
+                <div className="mt-8 space-y-3">
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input type="checkbox" checked={form.agree} onChange={(e)=>setForm({...form, agree:e.target.checked})} className="mt-1 accent-ink-900" />
+                    <span className="text-[13px] leading-relaxed text-ink-900/70">
+                      Даю согласие на обработку персональных данных в соответствии с{" "}
+                      <a href="/privacy.html" className="underline hover:text-ink-900">политикой конфиденциальности</a>{" "}
+                      (обязательно).
+                    </span>
+                  </label>
+                  {errors.agree && <div className="text-claret-600 font-mono text-[10.5px] tracking-[0.2em] uppercase">{errors.agree}</div>}
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input type="checkbox" checked={form.newsletter} onChange={(e)=>setForm({...form, newsletter:e.target.checked})} className="mt-1 accent-ink-900" />
+                    <span className="text-[13px] leading-relaxed text-ink-900/70">
+                      {s.newsletter_label || "Согласен получать информационные сообщения об услугах"} (необязательно).
+                    </span>
+                  </label>
+                </div>
                 <button type="submit" disabled={state === "sending"} className="mt-8 inline-flex items-center gap-3 bg-ink-900 text-bone-50 px-7 py-4 text-[14.5px] tracking-wide hover:bg-ink-700 transition-colors disabled:opacity-60">
                   {state === "sending" ? "Отправляем…" : "Отправить заявку"}
                   <Icon name="ArrowRight" className="w-4 h-4" />
@@ -681,7 +709,16 @@ function Footer({ c }) {
             </ul>
           </div>
         </div>
-        <div className="mt-16 pt-6 border-t border-bone-100/15 flex flex-col md:flex-row gap-4 md:items-center md:justify-between font-mono text-[11px] tracking-[0.18em] uppercase text-bone-100/45">
+        {s.legal && (
+          <div className="mt-10 pt-8 border-t border-bone-100/10 text-[12px] leading-relaxed text-bone-100/45 space-y-1 font-mono">
+            <div className="text-bone-100/60 font-medium">{s.legal.ip_name}</div>
+            <div>{s.legal.ogrn} &nbsp;·&nbsp; {s.legal.inn}</div>
+            <div>{s.legal.address}</div>
+            <div>E-mail для обращений по ПД: <a href={`mailto:${s.legal.email}`} className="hover:text-bone-100/70">{s.legal.email}</a></div>
+            <div className="pt-1">{s.legal.pd_text}</div>
+          </div>
+        )}
+        <div className="mt-6 pt-6 border-t border-bone-100/15 flex flex-col md:flex-row gap-4 md:items-center md:justify-between font-mono text-[11px] tracking-[0.18em] uppercase text-bone-100/45">
           <div>{s.copyright}</div>
           <div>{s.disclaimer}</div>
         </div>
@@ -717,6 +754,7 @@ function App() {
         <Contact c={c} />
       </main>
       <Footer c={c} />
+      <CookieBanner privacyLink={c.footer.legal?.pd_link || "/privacy.html"} />
     </>
   );
 }
