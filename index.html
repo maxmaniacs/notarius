@@ -705,7 +705,7 @@ function Footer({ c }) {
                 </a>
               </li>
               <li><a href="/privacy.html" className="hover:text-bone-50">Политика конфиденциальности</a></li>
-              <li><a href="#terms" className="hover:text-bone-50">Публичная оферта</a></li>
+              <li><a href="/offer.html" className="hover:text-bone-50">Публичная оферта</a></li>
             </ul>
           </div>
         </div>
@@ -718,9 +718,8 @@ function Footer({ c }) {
             <div className="pt-1">{s.legal.pd_text}</div>
           </div>
         )}
-        <div className="mt-6 pt-6 border-t border-bone-100/15 flex flex-col md:flex-row gap-4 md:items-center md:justify-between font-mono text-[11px] tracking-[0.18em] uppercase text-bone-100/45">
-          <div>{s.copyright}</div>
-          <div>{s.disclaimer}</div>
+        <div className="mt-6 pt-6 border-t border-bone-100/15 font-mono text-[11px] tracking-[0.18em] uppercase text-bone-100/45">
+          {s.copyright}
         </div>
       </div>
     </footer>
